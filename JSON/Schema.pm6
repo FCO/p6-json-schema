@@ -2,10 +2,6 @@ use JSON5::Tiny;
 
 enum SchemaType <object integer number string array>;
 
-role JSON::Schema[string]	{...}
-role JSON::Schema[integer]	{...}
-role JSON::Schema[object]	{...}
-
 role JSON::Schema {
 	has Str		$.str-json;
 	has Any		$.json;
@@ -16,9 +12,9 @@ role JSON::Schema {
 		$obj
 	}
 
-	multi method new($data?) {
+	multi method new(Any $data) {
 		my $obj = ::?CLASS.bless;
-		$obj.set-data($data) if $data;
+		$obj.set-data($data);
 		$obj
 	}
 
@@ -69,8 +65,8 @@ multi sub structurate(object, ::Type, $json) {
 			:package(Type),
 			:has_accessor,
 			:rw,
-			:required(%req{$key}),
 		);
+		trait_mod:<is>($attr, :required) if %req{$key};
 		Type.^add_attribute: $attr;
 	}
 }
