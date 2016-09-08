@@ -104,10 +104,8 @@ sub create-json-type(Str $name, $json-schema) {
 	my \tmp = Metamodel::ClassHOW.new_type(name => $name);
 	tmp.^add_parent(Any);
 	tmp.^add_role(JSON::Schema);
-	#tmp.^add_role(JSON::Schema[$type]);
-	#tmp.structurate($json-schema);
 
-	structurate($type, tmp, $json-schema);#
+	structurate($type, tmp, $json-schema);
 
 	with $json-schema<title> -> Str $title  {
 		tmp.set_why($title)
