@@ -106,7 +106,7 @@ sub create-json-type(Str $name, $json-schema) {
 	tmp.^add_role(JSON::Schema);
 	#tmp.^add_role(JSON::Schema[$type]);
 	#tmp.structurate($json-schema);
-	
+
 	structurate($type, tmp, $json-schema);#
 
 	with $json-schema<title> -> Str $title  {
